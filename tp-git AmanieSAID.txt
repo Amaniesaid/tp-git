@@ -1,0 +1,195 @@
+Travail à faire : 
+•	Ouvrir un terminal (terminal Git Bash à privilégier)
+•	Créer, en ligne de commande, un répertoire tp-git
+mkdir tp-git
+•	Se déplacer dans le répertoire
+cd tp-git
+•	Vérifier qu'on est dans le bon répertoire en affichant le chemin du répertoire courant
+/tp-git
+•	Initialiser un dépôt Git
+git init 
+•	Lister tous les fichiers du répertoire (y compris les fichiers cachés) pour s'assurer que le répertoire .git à été créé
+ls -all
+•	Ouvrir ce répertoire sous VS Code
+code .
+•	Exécuter git status et copier/coller la sortie
+On branch master
+No commits yet
+nothing to commit (create/copy files and use "git add" to track)
+•	Créer le fichier fichier1.md avec un contenu quelconque et l'enregistrer
+touch fichier1.md
+•	Créer le fichier fichier2.md avec un contenu quelconque et l'enregistrer
+touch fichier2.md
+•	Exécuter git status et copier/coller la sortie
+On branch master
+No commits yet
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        fichier1.md
+        fichier2.md
+nothing added to commit but untracked files present (use "git add" to track)
+•	Ajouter fichier1.md à l'index de Git (zone de Staging)
+git add fichier1.md
+•	Exécuter git status et copier/coller la sortie
+On branch master
+No commits yet
+Changes to be committed:
+ (use "git rm --cached <file>..." to unstage)
+        new file:   fichier1.md
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+      fichier2.md
+•	Créer un commit avec pour message : "Ajout de fichier1.md"
+git commit -m "Ajout de fichier1.md "
+•	Exécuter git status et copier/coller la sortie
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        fichier2.md
+nothing added to commit but untracked files present (use "git add" to track)
+•	Modifier fichier1.md et enregistrer
+echo "BTSSIO" > fichier1.md
+•	Exécuter git status et copier/coller la sortie
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   fichier1.md
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        fichier2.md
+no changes added to commit (use "git add" and/or "git commit -a")
+•	Ajouter fichier1.md et fichier2.md à la zone de Staging
+$ git add fichier1.md fichier2.md
+•	Créer un commit "Ajout de fichier2.md et modification de fichier1.md"
+git commit -m "Ajout de fichier2.md et modification de fichier1.md"
+•	Copier/coller l'ID des deux premiers commits : git log
+o	ID commit 1 : fbd8cdea004fea6eb1facdf3afdeb816ea5ecc7c
+o	ID commit 2 : 4e07dc59db142e509d3152e7804d091dcceab92e
+•	Que signifie qu'un fichier est "tracked" ou "untracked" ?
+Untracked : Les fichiers non suivis par Git
+Tracked : Fichiers suivis par Git
+•	Pourquoi doit-on passer les fichiers par la zone de Staging (l'index) avant de les committer ?
+La stage area peut être imaginé comme une zone intermédiaire entre le dépot local et le dépot web (github, bitbucket...).
+
+Quand on fait un git add ton_fichier depuis notre répertoire local, on ajoute notre fichier dans la stage area, qui sert alors d'index. Ensuite on fait un git commit, et souvent on complète par un git push nom_du_repertoire nom_de_la_branche afin de pousser notre (ou nos) fichier(s) dans le dépot distant.
+
+Quand on modifies un fichier qui fait parti de notre dépot local (synchronisé sur un dépot distant), git va détecter qu'il y a eu modification, mais ce fichier ne fera pas automatiquement parti du prochain commit, et sera donc en statut "unstaged". Ainsi, si on git stage notre_fichier_modifié, alors ce dernier se retrouvera dans l'index (stage area). 
+
+L'avantage de la stage area c'est que si on travaille sur plusieurs fichiers en même temps, on peut alors choisir lesquels envoyer, par exemple ceux qui sont au stade final, et garder en stage area ceux qui nécessitent encore qu’on travaille dessus. Ainsi, la stage area nous permet de compléter les fichiers, morceaux par morceaux, sans avoir à les déposer sur le dépôt final. 
+•	Créer une branche fonctionnalite1
+git branch fonctionnalite1
+•	Lister les branches
+git branch 
+•	Se déplacer sur la branche fonctionnalite1
+git checkout fonctionnalite1
+•	Lister les branches
+$ git branch -a
+•	Que représente l'étoile à côté des noms des branches ?
+L’étoile indique la branche courante 
+•	Créer un nouveau fichier fichier3.md
+touch fichier3.md
+•	Modifier le fichier fichier2.md
+echo "Amanie" > fichier2.md
+o	Comment utiliser VS Code pour qu'il nous montre les différences entre l'ancienne version de fichier2.md et la version courante que l'on vient d'éditer ?
+Aller dans source control et sélectionner le fichier2.md
+•	Committer ces deux modifications : "Fonctionnalité 1 - première phase"
+•	Créer un nouveau fichier fichier4.md
+	touch fichier4.md
+•	Modifier de nouveau le fichier fichier2.md
+echo "BTSsio2023" > fichier2.md
+•	Committer ces deux modifications : "Fonctionnalité 1 - terminée"
+•	Afficher la liste des fichiers du répertoire
+$ ls
+fichier1.md  fichier2.md  fichier3.md  fichier4.md
+•	Se déplacer sur la branche master
+$ git checkout master
+•	Afficher la liste des fichiers du répertoire
+$ ls
+fichier1.md  fichier2.md
+•	Pourquoi les deux sorties sont-elles différentes ? Les fichiers ont-ils disparus ?
+•	Créer une nouvelle branche fonctionnalite2
+o	Cette branche ne va pas avoir toutes les données incluses dans fonctionnalite1. Pourquoi ?
+Car la branche par défaut est master donc lorsque on crée une nouvelle branche elle contient les données stockées dans la branche principale
+o	Qu'aurait-il fallu faire si on avait souhaité démarrer la branche fonctionnalite2 en intégrant les modifications récentes de fonctionnalite1 ?
+git checkout -b fonctionnalite1/fonctionnalite2
+•	Se déplacer sur la nouvelle branche fonctionnalite2
+git checkout fonctionnalite2
+•	Créer un nouveau fichier fichier5.md
+mkdir fichier5.md
+•	Faire un commit intégrant cette ajout : "Ajout fichier5.md"
+git commit -m "Ajout de fichier5.md"
+•	Entrer la commande git log --oneline --decorate --graph --all pour visualiser, sur le terminal, le graphe des commits sur toutes les branches
+o	Noter la « déviation » entre les deux branches, à partir de la branche master
+$ git log --oneline --decorate --graph --all
+* 2b839a6 (HEAD -> fonctionnalite2) Ajout de fichier5.md
+| * 1228af6 (fonctionnalite1) Fonctionnalité 1 - terminée
+| * 24b82f0 Fonctionnalité 1 -Première phase
+|/
+* 4e07dc5 (master) Ajout de fichier2.md et modification de fichier1.md
+* fbd8cde Ajout de fichier1.md
+•	Installer l'extension VS Code Git Graph et visualiser le graphe actuel des commits à l'aide de cette extension
+o	Sur cette représentation, que représente les points ?
+Les points représente les commits
+
+o	Comment voit-on sur quelle branche on est actuellement ?
+C’est le point ou y’a un vide à l’intérieur
+•	On considère que la branche originale (master ou main) est la branche d'intégration, c'est-à-dire celle qui va contenir l'historique de toutes les modifications développées au fur et à mesure dans les branches annexes
+•	On va maintenant fusionner la branche fonctionnalite1, qui est terminée, avec la branche d'intégration
+•	Se déplacer sur la branche master
+o	Noter le changement dans l'onglet Git Graph
+•	Fusionner avec la branche fonctionnalite1
+ git switch master
+git merge fonctionnalite1
+•	Noter le changement dans l'onglet Git Graph. Que signifie la mention Fast-forward indiquée par la sortie de la commande ?
+Lorsque l’on cherche à fusionner un commit qui peut être atteint en parcourant l’historique depuis le commit d’origine, Git se contente d’avancer le pointeur car il n’y a pas de travaux divergents à fusionner — ceci s’appelle un fast-forward (avance rapide).
+•	On veut maintenant fusionner fonctionnalite2 dans la branche d'intégration (master)
+•	Effectuer cette fusion
+git merge fonctionnalite2
+•	Noter le changement dans l'onglet Git Graph. Que signifie la mention Merge made by the ... strategy indiquée par la sortie de la commande ?
+Nouvelle façon rapide pour fusionner plus vite que la précédente.
+•	Quelle est la différence fondamentale avec la fusion précédente ?
+La fonctionnalite2 n’était pas incluse dans le HEAD
+•	Créer une nouvelle branche fonctionnalite3, se déplacer dessus, et modifier le fichier fichier1.md en y ajoutant une ligne de texte. Committer : "Modification fichier1 pour fonctionnalité 3"
+	git checkout -b fonctionnalite3
+	echo "MonMeilleurBTS"->fichier1.md
+o	Comment utiliser Git Graph pour qu'il nous montre les différences entre l'ancienne version de fichier1.md et la version courante que l'on vient de committer ?
+Cliquer sur fonctionnalite3 dans l’onglet à droite faire un clic droit  sur fichier1.md et view diff with working file
+•	Repartir sur master, et modifier fichier1.md en y ajoutant aussi une ligne (différente de celle qu'on a ajoutée sur l'autre branche) et commiter
+echo "AmanieSAID" -> fichier1.md
+•	Tenter de fusionner la branche fonctionnalite3 avec master
+o	Que se passe-t-il et pourquoi ?
+Erreur car fichier1.md a deux contenus différent dans chacune des branches et dans fonctionnalité3 n’a pas été committer
+Auto-merging fichier1.md
+CONFLICT (content): Merge conflict in fichier1.md
+Automatic merge failed; fix conflicts and then commit the result
+•	Lancer un git status
+o	Que doit-on faire si on veut annuler la fusion en cours ?
+Git merge  --abort
+•	On veut résoudre le conflit. Plusieurs possibilités :
+o	Conserver uniquement les modifications faites dans fonctionnalite3
+o	Conserver uniquement les modifications faites dans master
+o	Conserver les deux modifications
+o	Supprimer les deux modifications ou remanier sensiblement le fichier pour les intégrer correctement
+•	Git nous laisse totalement la main et ne va pas essayer d'imposer l'un de ces choix pour nous, ni nous assister dans l'application automatique de l'un d'entre eux : il faut examiner le(s) fichier(s) en conflit et éditer nous-mêmes
+•	Ouvrir le fichier en question sous VS Code
+o	La chaîne <<<<<<<<<< marque le début du conflit
+o	La chaîne >>>>>>>>>> marque la fin du conflit
+o	La chaîne ========== sépare les deux versions
+•	Éditer le fichier pour faire en sorte d'intégrer les deux modifications ; à la fin de l'édition :
+o	Sauvegarder
+o	Il ne doit plus y avoir de marques quelconques en dehors des ajouts fonctionnels originaux, c'est-à-dire pas de <<<<<<<<<<, ni de mentions de nom de branche, etc. : vous rendez le fichier tel qu'il doit apparaître dans le commit de fusion, avec les conflits résolus manuellement
+•	Ajouter les modification à l'index et committer
+•	NB : parfois, plusieurs fichiers sont en conflit ; le processus est identique, il faut juste résoudre les conflits sur tous les fichiers
+•	NB : les conflits de fusion sont fréquents lorsqu'on travaille en collaboration (plusieurs personnes vont travailler sur le même fichier pour remplir deux fonctionnalités différentes)
+•	Les branches créées n'ont plus de raison d'exister
+o	Elles avaient pour but de créer une déviation afin de travailler sur des fonctionnalités individuelles
+o	On va vouloir nettoyer le dépôt en les supprimant
+o	Cela ne va bien sûr pas supprimer tous les commits qui y sont associés
+o	Attention cependant d'éviter en général de supprimer une branche qui n'a pas encore été intégrée à la branche d'intégration, sauf on souhaite vraiment abandonner le développement de cette branche
+o	Ne pas réutiliser une branche qui a déjà été intégrée pour démarrer une nouvelle piste : toujours utiliser une nouvelle branche
+o	Nouvelle tâche ? => nouvelle branche à partir d'un commit de la branche d'intégration (en général le plus récent)
+o	Tâche terminée ? => fusion dans la branche d'intégration et suppression de la branche
+•	Supprimer les trois branches fonctionnalitex (attention : on ne peut pas supprimer une branche sur laquelle on est)
+git branch -d fonctionnalite1 fonctionnalite2 fonctionnalite3
+
